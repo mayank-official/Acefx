@@ -1,0 +1,507 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Signup - NOIR EDIT</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#62259b",
+                        "on-tertiary-fixed-variant": "#444173",
+                        "on-background": "#e5e1e4",
+                        "surface-container-high": "#2a2a2c",
+                        "on-secondary": "#490081",
+                        "surface-bright": "#39393b",
+                        "on-primary-fixed": "#25005a",
+                        "on-surface": "#e5e1e4",
+                        "inverse-on-surface": "#313032",
+                        "surface-tint": "#d2bbff",
+                        "surface-container-highest": "#353437",
+                        "secondary-fixed-dim": "#ddb8ff",
+                        "background": "#131315",
+                        "primary-container": "#7c3aed",
+                        "outline": "#958da1",
+                        "on-secondary-fixed": "#2c0051",
+                        "on-surface-variant": "#ccc3d8",
+                        "surface-container": "#201f22",
+                        "surface": "#131315",
+                        "primary": "#d2bbff",
+                        "surface-variant": "#353437",
+                        "tertiary-container": "#646195",
+                        "on-secondary-container": "#d1a1ff",
+                        "primary-fixed-dim": "#d2bbff",
+                        "primary-fixed": "#eaddff",
+                        "tertiary-fixed": "#e3dfff",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#2d2a5b",
+                        "on-tertiary-container": "#e7e3ff",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "secondary-fixed": "#f0dbff",
+                        "tertiary-fixed-dim": "#c4c1fb",
+                        "outline-variant": "#4a4455",
+                        "surface-dim": "#131315",
+                        "inverse-surface": "#e5e1e4",
+                        "on-primary-container": "#ede0ff",
+                        "on-primary": "#3f008e",
+                        "surface-container-low": "#1c1b1d",
+                        "error-container": "#93000a",
+                        "secondary": "#ddb8ff",
+                        "on-error": "#690005",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#732ee4",
+                        "secondary-container": "#62259b",
+                        "tertiary": "#c4c1fb",
+                        "on-tertiary-fixed": "#181445",
+                        "surface-container-lowest": "#0e0e10"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "48px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "unit": "4px",
+                        "container-max": "1440px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "2xl": "80px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "button": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"],
+                        "h1": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "button": ["14px", { "lineHeight": "1.0", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h3": ["32px", { "lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "h1": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: #131315;
+            color: #e5e1e4;
+        }
+
+        .reel-container {
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+
+        .reel {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            position: relative;
+            padding: 1rem;
+        }
+
+        .reel-content {
+            width: 100%;
+            max-width: 600px;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Reel indicators */
+        .reel-indicators {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .reel-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reel-indicator.active {
+            background: #d2bbff;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .glass-panel {
+            background: rgba(24, 24, 27, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .input-recessed {
+            background: #1c1b1d !important;
+            color: #e5e1e4 !important;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5) !important;
+            border: 1px solid #353437 !important;
+        }
+        
+        .input-recessed:focus {
+            border-color: #d2bbff !important;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 0 15px rgba(210, 187, 255, 0.2) !important;
+            outline: none !important;
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px #1c1b1d inset !important;
+            -webkit-text-fill-color: #e5e1e4 !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #5a00c6);
+            border: 1px solid rgba(210, 187, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        #password, #confirmPassword {
+            font-weight: 700 !important;
+            font-size: 16px !important;
+            letter-spacing: 0.4em !important;
+            color: #e5e1e4 !important;
+            background-color: #0e0e10 !important;
+        }
+        #password::placeholder, #confirmPassword::placeholder {
+            font-weight: 400;
+            letter-spacing: normal;
+            color: #4a4455;
+        }
+
+        /* Scroll hint animation */
+        .scroll-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            animation: bounce 2s infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .scroll-hint.hide {
+            display: none;
+        }
+    </style>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="min-h-screen flex items-center justify-center p-md lg:p-0">
+<main class="w-full h-screen flex flex-col lg:flex-row overflow-hidden bg-background relative">
+<!-- Floating Home Button -->
+<a href="index.html" class="absolute top-4 right-4 sm:top-8 sm:right-8 z-50 flex items-center gap-1 sm:gap-2 text-on-surface-variant hover:text-white transition-all duration-300 bg-surface-container-highest/30 hover:bg-surface-container-highest border border-white/5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full backdrop-blur-md shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] group">
+    <span class="material-symbols-outlined text-[16px] sm:text-[18px] group-hover:-translate-x-0.5 transition-transform">home</span>
+    <span class="font-label-caps text-[10px] sm:text-xs tracking-widest uppercase font-semibold hidden sm:inline">Home</span>
+</a>
+<!-- Left Side: Cinematic Image -->
+<section class="hidden lg:block lg:w-1/2 relative h-full">
+<div class="absolute inset-0 z-10 bg-gradient-to-r from-transparent to-background"></div>
+<img alt="Cinematic Film Studio" class="w-full h-full object-cover" data-alt="A high-contrast cinematic shot of a professional film studio interior, dominated by deep shadows and stark directional lighting. The scene features high-end camera equipment and studio monitors glowing in the dark, creating a moody, professional atmosphere. The color palette emphasizes rich blacks, cool metallic tones, and subtle anamorphic lens flares in deep purple and violet hues. The aesthetic is extremely premium, minimalist, and perfectly aligns with a dark-mode video editing suite." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6xEDJ7_9OUU0Wj10NnrLrJr8IzFKNk9v_Gifph1q0dZBP66t2sG6L8JxXdggJqTEv7CS31LiNKCBVFDHwrdvBvFHnDI5xLEtzHyOOFWgFZhaEA2F0Fd3lnTm3N8_dCDeaL9ZWgGPWs7Lbn4tINQVdD4hbswE78vfmgv9dne0GSz-_UlwmVagwa0kzT8UebOweo0tq_rS9Wpm_TGnMZ57OEDfmUBNMLzwtKFAZupwW-Jp3ZeI9eduDGaFYW5hlA6RL_v4syhldmA4">
+<div class="absolute top-8 sm:top-12 left-8 sm:left-12 z-20">
+<a class="text-xl sm:text-2xl font-black tracking-tighter text-white uppercase italic" href="index.html">ACE FX</a>
+</div>
+<div class="absolute bottom-xl left-xl z-20 max-w-md">
+<h2 class="font-h2 text-h2 text-on-surface mb-sm drop-shadow-xl">Craft Your Vision.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant drop-shadow-md">Join the elite platform for cinematic video editing and color grading.</p>
+</div>
+</section>
+<!-- Right Side: Signup Form -->
+<section class="w-full lg:w-1/2 h-full flex flex-col items-center px-4 sm:px-6 md:px-lg pt-16 pb-8 sm:py-2xl lg:px-2xl relative overflow-y-auto">
+<div class="w-full max-w-md my-auto flex flex-col">
+<!-- Mobile Logo -->
+<div class="lg:hidden mb-8 flex justify-center w-full">
+<a class="text-xl sm:text-2xl font-black tracking-tighter text-white uppercase italic" href="index.html">ACE FX</a>
+</div>
+<div class="w-full glass-panel p-6 sm:p-10 rounded-xl relative z-10">
+<div class="mb-5 sm:mb-6">
+<h1 class="font-h3 text-xl sm:text-2xl font-bold text-on-surface mb-1">Create Account</h1>
+<p class="font-body-md text-sm text-on-surface-variant">Enter your details to access the suite.</p>
+</div>
+<form id="signup-form" class="space-y-3 sm:space-y-4">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase text-[10px] sm:text-xs tracking-wider" for="fullName">Full Name</label>
+<input class="w-full input-recessed rounded-lg px-3 py-2 sm:py-2 font-body-md text-sm text-on-surface placeholder-outline-variant focus:ring-0" id="fullName" name="fullName" placeholder="John Doe" type="text">
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase text-[10px] sm:text-xs tracking-wider" for="email">Email Address</label>
+<input class="w-full input-recessed rounded-lg px-3 py-2 sm:py-2 font-body-md text-sm text-on-surface placeholder-outline-variant focus:ring-0" id="email" name="email" placeholder="john@example.com" type="email">
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase text-[10px] sm:text-xs tracking-wider" for="phone">Phone Number</label>
+<div class="flex gap-2">
+<select class="w-[35%] sm:w-[30%] input-recessed rounded-lg px-2 py-2 sm:py-2 font-body-md text-sm text-on-surface focus:ring-0" id="countryCode" name="countryCode">
+<option value="+1">🇺🇸 +1</option>
+<option value="+44">🇬🇧 +44</option>
+<option value="+91" selected>🇮🇳 +91</option>
+<option value="+61">🇦🇺 +61</option>
+<option value="+81">🇯🇵 +81</option>
+<option value="+49">🇩🇪 +49</option>
+</select>
+<input class="flex-1 input-recessed rounded-lg px-3 py-2 sm:py-2 font-body-md text-sm text-on-surface placeholder-outline-variant focus:ring-0" id="phone" name="phone" placeholder="(555) 000-0000" type="tel">
+</div>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase text-[10px] sm:text-xs tracking-wider" for="password">Password</label>
+<div class="relative">
+<input class="w-full input-recessed rounded-lg px-3 py-2 sm:py-2 font-body-md text-sm text-on-surface placeholder-outline-variant focus:ring-0 pr-8" id="password" name="password" placeholder="•••••••••" type="password">
+<button class="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button" id="togglePassword">
+<span class="material-symbols-outlined text-[16px] sm:text-[18px]">visibility_off</span>
+</button>
+</div>
+<!-- Password Requirements Section -->
+<div id="passwordRequirements" class="mt-2 sm:mt-3 p-2 sm:p-3 bg-surface-container-low border border-outline-variant rounded-lg space-y-1.5 hidden">
+<p class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest mb-1 sm:mb-2">Password Requirements:</p>
+<div class="space-y-1">
+<div class="flex items-center gap-2" id="req-length">
+<span class="material-symbols-outlined text-[14px] sm:text-[16px] text-outline-variant">radio_button_unchecked</span>
+<span class="font-body-md text-[11px] sm:text-xs text-on-surface-variant">At least 8 characters</span>
+</div>
+<div class="flex items-center gap-2" id="req-number">
+<span class="material-symbols-outlined text-[14px] sm:text-[16px] text-outline-variant">radio_button_unchecked</span>
+<span class="font-body-md text-[11px] sm:text-xs text-on-surface-variant">One number (0-9)</span>
+</div>
+</div>
+</div>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase text-[10px] sm:text-xs tracking-wider" for="confirmPassword">Confirm Password</label>
+<div class="relative">
+<input class="w-full input-recessed rounded-lg px-3 py-2 sm:py-2 font-body-md text-sm text-on-surface placeholder-outline-variant focus:ring-0 pr-8" id="confirmPassword" name="confirmPassword" placeholder="•••••••••" type="password">
+<button class="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button" id="toggleConfirmPassword">
+<span class="material-symbols-outlined text-[16px] sm:text-[18px]">visibility_off</span>
+</button>
+</div>
+<div id="passwordMatch" class="mt-1 text-[11px] sm:text-xs text-error font-body-md hidden">Passwords do not match</div>
+</div>
+<button class="w-full btn-primary rounded-lg py-2.5 sm:py-3 mt-4 sm:mt-6 font-button text-sm text-on-primary-fixed uppercase tracking-wider flex items-center justify-center gap-2" type="submit">
+<span>Sign Up</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward" data-weight="fill">arrow_forward</span>
+</button>
+</form>
+<div class="mt-4 sm:mt-5 relative flex items-center py-2 sm:py-3">
+<div class="flex-grow border-t border-surface-variant"></div>
+<span class="flex-shrink-0 mx-2 font-label-caps text-[10px] sm:text-xs text-outline-variant uppercase tracking-wider">Or continue with</span>
+<div class="flex-grow border-t border-surface-variant"></div>
+</div>
+<div class="grid grid-cols-2 gap-3 mt-2 sm:mt-3">
+<button id="google-btn-signup" class="btn-secondary rounded-lg py-2 flex items-center justify-center gap-2 font-button text-xs sm:text-sm text-on-surface" type="button">
+<img alt="Google" class="w-4 h-4" data-alt="Google logo icon." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSVaHLOReimhtQaP1gKoAwea3SlzBKMcocFd8UqagSjgkQYgubQuwj_ixDjmg2uIc-e9mw_xf0Zgf-GgAVLzj2ODGxo2XRNME6mEFrFbknp6rmERxynbjN8aNZ_D9xPUBXWCNhmIqrqKZAdL08had1KLqwugmxTA_TwAgTsUgV9brKCLtDY2u4R3dDhvqcW7A8ZXRc68AlBSylSdHQw9JngxFueEK3MM1X_JPunVZoKdaGAtKQp7K9pu6gqJcEUSu7HTarul8v190">
+                        Google
+                    </button>
+<button class="btn-secondary rounded-lg py-2 flex items-center justify-center gap-2 font-button text-xs sm:text-sm text-on-surface" type="button">
+<span class="material-symbols-outlined text-white text-[16px] sm:text-[18px]" data-icon="apple" data-weight="fill">ios</span>
+                        Apple
+                    </button>
+</div>
+<p class="font-body-md text-on-surface-variant text-xs sm:text-sm text-center mt-4 sm:mt-5">
+                    Already have an account? <a class="text-primary hover:text-primary-fixed transition-colors font-medium" href="login.html">Login</a>
+</p>
+</div>
+</div>
+<!-- Decorative Light Leak -->
+<div class="absolute bottom-0 right-0 w-96 h-96 bg-primary-container rounded-full filter blur-[120px] opacity-10 pointer-events-none hidden sm:block"></div>
+</section>
+</main>
+<script>
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const passwordRequirements = document.getElementById('passwordRequirements');
+    const passwordMatchMessage = document.getElementById('passwordMatch');
+    const togglePasswordBtn = document.getElementById('togglePassword');
+    const toggleConfirmPasswordBtn = document.getElementById('toggleConfirmPassword');
+    
+    // Password validation requirements
+    const requirements = {
+        length: (pwd) => pwd.length >= 8,
+        number: (pwd) => /[0-9]/.test(pwd)
+    };
+    
+    // Check if all requirements are met
+    function allRequirementsMet(password) {
+        return Object.values(requirements).every(req => req(password));
+    }
+    
+    // Update requirements display
+    function updateRequirements() {
+        const password = passwordInput.value;
+        
+        // Show/hide requirements section
+        if (password.length > 0) {
+            passwordRequirements.classList.remove('hidden');
+        } else {
+            passwordRequirements.classList.add('hidden');
+        }
+        
+        // Update each requirement
+        updateRequirement('req-length', requirements.length(password));
+        updateRequirement('req-number', requirements.number(password));
+        
+        // Check password match
+        validatePasswordMatch();
+    }
+    
+    function updateRequirement(id, isMet) {
+        const element = document.getElementById(id);
+        const icon = element.querySelector('.material-symbols-outlined');
+        const textSpan = element.querySelector('span:last-child');
+        
+        if (isMet) {
+            icon.textContent = 'check_circle';
+            icon.classList.remove('text-outline-variant');
+            icon.classList.add('text-secondary');
+            textSpan.classList.remove('text-on-surface-variant');
+            textSpan.classList.add('text-secondary');
+        } else {
+            icon.textContent = 'radio_button_unchecked';
+            icon.classList.remove('text-secondary');
+            icon.classList.add('text-outline-variant');
+            textSpan.classList.remove('text-secondary');
+            textSpan.classList.add('text-on-surface-variant');
+        }
+    }
+    
+    // Validate password match
+    function validatePasswordMatch() {
+        if (confirmPasswordInput.value && passwordInput.value !== confirmPasswordInput.value) {
+            passwordMatchMessage.classList.remove('hidden');
+        } else {
+            passwordMatchMessage.classList.add('hidden');
+        }
+    }
+    
+    // Toggle password visibility
+    togglePasswordBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        togglePasswordBtn.querySelector('.material-symbols-outlined').textContent = isPassword ? 'visibility' : 'visibility_off';
+    });
+    
+    // Toggle confirm password visibility
+    toggleConfirmPasswordBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isPassword = confirmPasswordInput.type === 'password';
+        confirmPasswordInput.type = isPassword ? 'text' : 'password';
+        toggleConfirmPasswordBtn.querySelector('.material-symbols-outlined').textContent = isPassword ? 'visibility' : 'visibility_off';
+    });
+    
+    // Update requirements on input
+    passwordInput.addEventListener('input', updateRequirements);
+    confirmPasswordInput.addEventListener('input', validatePasswordMatch);
+    
+    // Redirect to OTP page on submit
+    const signupForm = document.getElementById('signup-form');
+    if (signupForm) {
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Check if passwords match before redirecting
+            if (passwordInput.value && confirmPasswordInput.value && passwordInput.value !== confirmPasswordInput.value) {
+                alert("Passwords do not match. Please fix before proceeding.");
+                return;
+            }
+            
+            // In a real app, you would send data to backend here. 
+            // For now, redirect to the OTP verification page.
+            window.location.href = 'verify-otp.html';
+        });
+    }
+    
+    // Google Identity Services implementation
+    window.onload = function () {
+        if (typeof google !== 'undefined') {
+            const client = google.accounts.oauth2.initTokenClient({
+                client_id: 'YOUR_GOOGLE_CLIENT_ID_HERE', // <-- Replace with your real Google Client ID
+                scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+                callback: (response) => {
+                    console.log("Google Token Response: ", response);
+                    alert("Successfully authenticated with Google!\n\nAccess Token: " + response.access_token.substring(0, 20) + "...");
+                    // Redirect or handle signup here
+                },
+            });
+            
+            document.getElementById('google-btn-signup').addEventListener('click', (e) => {
+                e.preventDefault();
+                client.requestAccessToken();
+            });
+        }
+    };
+</script>
+
+</body></html>
