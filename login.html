@@ -1,0 +1,252 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Login - NOIR EDIT</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#732ee4",
+                        "surface-container-lowest": "#0e0e10",
+                        "surface-container-highest": "#353437",
+                        "error": "#ffb4ab",
+                        "on-surface-variant": "#ccc3d8",
+                        "tertiary-fixed": "#e3dfff",
+                        "tertiary-fixed-dim": "#c4c1fb",
+                        "secondary-container": "#62259b",
+                        "secondary-fixed-dim": "#ddb8ff",
+                        "on-tertiary-fixed": "#181445",
+                        "primary-fixed": "#eaddff",
+                        "on-secondary-fixed-variant": "#62259b",
+                        "tertiary-container": "#646195",
+                        "outline": "#958da1",
+                        "inverse-on-surface": "#313032",
+                        "on-background": "#e5e1e4",
+                        "on-primary-fixed": "#25005a",
+                        "surface-container-low": "#1c1b1d",
+                        "surface-tint": "#d2bbff",
+                        "primary-container": "#7c3aed",
+                        "primary-fixed-dim": "#d2bbff",
+                        "surface": "#131315",
+                        "surface-variant": "#353437",
+                        "secondary": "#ddb8ff",
+                        "on-secondary-fixed": "#2c0051",
+                        "on-tertiary": "#2d2a5b",
+                        "primary": "#d2bbff",
+                        "tertiary": "#c4c1fb",
+                        "inverse-surface": "#e5e1e4",
+                        "background": "#131315",
+                        "on-surface": "#e5e1e4",
+                        "on-primary": "#3f008e",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "on-secondary": "#490081",
+                        "on-primary-container": "#ede0ff",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "surface-container-high": "#2a2a2c",
+                        "surface-bright": "#39393b",
+                        "on-tertiary-container": "#e7e3ff",
+                        "surface-dim": "#131315",
+                        "secondary-fixed": "#f0dbff",
+                        "outline-variant": "#4a4455",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#d1a1ff",
+                        "surface-container": "#201f22",
+                        "on-tertiary-fixed-variant": "#444173"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "gutter": "24px",
+                        "xl": "48px",
+                        "unit": "4px",
+                        "lg": "24px",
+                        "2xl": "80px",
+                        "sm": "8px",
+                        "container-max": "1440px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "h3": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-md": ["Inter"],
+                        "button": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                        "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "h3": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "h2": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "button": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(24, 24, 27, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .input-inset {
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+        }
+        #password {
+            font-weight: 700 !important;
+            font-size: 16px !important;
+            letter-spacing: 0.4em !important;
+            color: #e5e1e4 !important;
+            background-color: #0e0e10 !important;
+        }
+        #password::placeholder {
+            font-weight: 400;
+            letter-spacing: normal;
+            color: #4a4455;
+        }
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px #1c1b1d inset !important;
+            -webkit-text-fill-color: #e5e1e4 !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }    </style>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-sans">
+<!-- TopNavBar (Suppressed for Transactional Page) -->
+<!-- Content Canvas -->
+<main class="flex-grow flex flex-col md:flex-row h-screen relative">
+<!-- Floating Home Button -->
+<a href="index.html" class="absolute top-4 right-4 sm:top-8 sm:right-8 z-50 flex items-center gap-1 sm:gap-2 text-on-surface-variant hover:text-white transition-all duration-300 bg-surface-container-highest/30 hover:bg-surface-container-highest border border-white/5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full backdrop-blur-md shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] group">
+    <span class="material-symbols-outlined text-[16px] sm:text-[18px] group-hover:-translate-x-0.5 transition-transform">home</span>
+    <span class="font-label-caps text-[10px] sm:text-xs tracking-widest uppercase font-semibold hidden sm:inline">Home</span>
+</a>
+<!-- Left Side: Image / Brand -->
+<div class="hidden md:flex flex-col md:w-1/2 lg:w-3/5 bg-surface-container-lowest relative overflow-hidden">
+<img alt="Cinematic Video Editing Workspace" class="absolute inset-0 w-full h-full object-cover opacity-80" data-alt="A moody, cinematic workspace featuring multiple monitors displaying complex video editing timelines and color grading wheels. The room is dark, illuminated primarily by the glow of the screens and subtle, deep purple and blue ambient LED lighting. The style is high-end, professional, and intense, reflecting a premium 'Noir Edit' aesthetic. The focus is sharp on a specialized editing console keyboard in the foreground, with the monitors slightly out of focus in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmt7VzPkcSqxOH_-68IgsaNRCl4Oi6yDM5tk7FL7nqgk6p6kSycbL0treFeK3IUoyzmfWysUoq9ZnZW34H-6W6-UpA-af-Y0nj7YKHI3FDkpxUrBwM35oy7b1wi3LEhV2o7ZFYNv4JwjKhOho0YtCsxm11staGnGYfrvHMMiui2ej5rvxaF9S4mT3HQrRzBM7wAunl-eU9XG-kSCwKUXsTHtzbtm5MBRxQlY6_VZWGO0ZUgco2IfLEj9tNmPvgozFb8QpetYkAxTA">
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent"></div>
+<div class="relative z-10 p-8 sm:p-12 flex flex-col justify-between h-full">
+<div>
+<a href="index.html" class="text-xl sm:text-2xl font-black tracking-tighter text-white uppercase italic">ACE FX</a>
+</div>
+<div class="max-w-md">
+<h1 class="font-h1 text-3xl sm:text-h1 text-white mb-3 sm:mb-6">Master Your Craft.</h1>
+<p class="font-body-lg text-sm sm:text-body-lg text-on-surface-variant">Enter the grading suite. Your premium workspace for cinematic storytelling awaits.</p>
+</div>
+</div>
+</div>
+<!-- Right Side: Login Form -->
+<div class="w-full md:w-1/2 lg:w-2/5 bg-background flex flex-col items-center px-4 sm:px-6 md:px-16 lg:px-24 pt-16 pb-8 sm:py-12 relative z-10 overflow-y-auto">
+<div class="w-full max-w-md my-auto flex flex-col">
+<!-- Mobile Logo -->
+<div class="md:hidden mb-8 sm:mb-12 flex justify-center w-full">
+<a href="index.html" class="text-xl sm:text-2xl font-black tracking-tighter text-white uppercase italic">ACE FX</a>
+</div>
+<div class="w-full space-y-6 sm:space-y-8">
+<div class="space-y-1 sm:space-y-2 text-center md:text-left">
+<h2 class="font-h2 text-2xl sm:text-3xl md:text-h2 text-white">Welcome back</h2>
+<p class="font-body-md text-sm sm:text-body-md text-on-surface-variant">Sign in to access your projects.</p>
+</div>
+<form class="space-y-4 sm:space-y-6" id="login-form" onsubmit="handleLogin(event)">
+<div class="space-y-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant block uppercase tracking-widest text-xs" for="identifier">Email or Mobile Number</label>
+<input class="w-full bg-surface-container-low text-on-surface border border-outline-variant rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 font-body-md text-sm sm:text-body-md focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container input-inset transition-all" id="identifier" name="identifier" placeholder="Email or Mobile Number" required="" type="text">
+</div>
+<div class="space-y-1">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-on-surface-variant block uppercase tracking-widest text-xs" for="password">Password</label>
+<a class="font-label-caps text-label-caps text-primary hover:text-primary-fixed transition-colors text-xs" href="forgot-password.html">Forgot?</a>
+</div>
+<div class="relative">
+<input class="w-full bg-surface-container-low text-on-surface border border-outline-variant rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 font-body-md focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container input-inset transition-all text-sm sm:text-body-md" id="password" name="password" placeholder="••••••••" required="" type="password">
+<button class="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] sm:text-[20px]">visibility_off</span>
+</button>
+</div>
+</div>
+<button class="w-full bg-gradient-to-r from-primary-container to-secondary-container text-white font-button text-button py-3 sm:py-4 rounded-lg shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:shadow-[0_0_25px_rgba(124,58,237,0.5)] transition-all duration-300 text-sm sm:text-button" type="submit">
+                        Sign In
+                    </button>
+</form>
+<div class="relative">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-outline-variant"></div>
+</div>
+<div class="relative flex justify-center text-xs sm:text-sm">
+<span class="px-2 bg-background font-label-caps text-label-caps text-on-surface-variant">Or continue with</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3 sm:gap-4">
+<button id="google-btn-login" type="button" class="glass-panel text-on-surface font-button text-button py-2.5 sm:py-3 rounded-lg flex justify-center items-center gap-1 sm:gap-2 hover:bg-surface-container-high transition-colors text-xs sm:text-button">
+<img alt="Google" class="w-4 h-4 sm:w-5 sm:h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlTtzrv8cNxwZAjHj8kqbAC6i7lM2iNDNeRU_AHQEOQ6NQ3tSvk4n5F1Q5ic3sagfG3Aj0p8FhtUP7GA3BJxnlM1W8UncUQF766QmNnwDzxINb9Lg7kXn8qgH9Kc0-BPbA3gikv5oI4AhjHGwxDnQLYMUt8H_g2I6iHyz-q32n-FkHPdiUqq4fNliyF4M5jsmI-SQVw_cDtnWNLz6IrF6p_DBm1kM3Co7Mm6Wu6LtzYcvWm2pPyuwL768zaEOtWy7Z43EUKDGxdjE">
+                        Google
+                    </button>
+<button class="glass-panel text-on-surface font-button text-button py-2.5 sm:py-3 rounded-lg flex justify-center items-center gap-1 sm:gap-2 hover:bg-surface-container-high transition-colors text-xs sm:text-button">
+<span class="material-symbols-outlined text-white text-[18px] sm:text-[20px]">ios</span>
+                        Apple
+                    </button>
+</div>
+<p class="text-center font-body-md text-on-surface-variant text-xs sm:text-body-md mt-6 sm:mt-8">Don't have an account?&nbsp;&nbsp;<a class="text-primary hover:text-primary-fixed transition-colors font-semibold" href="signup.html">Sign Up</a></p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Suppressed for Transactional Page) -->
+<script>
+    function handleLogin(e) {
+        e.preventDefault();
+        window.location.href = 'index.html';
+    }
+
+    const passwordInput = document.getElementById('password');
+    const eyeButton = document.querySelector('button[type="button"]');
+    
+    // Toggle password visibility
+    eyeButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        eyeButton.querySelector('.material-symbols-outlined').textContent = isPassword ? 'visibility' : 'visibility_off';
+    });
+    
+    // Google Identity Services implementation
+    window.onload = function () {
+        if (typeof google !== 'undefined') {
+            const client = google.accounts.oauth2.initTokenClient({
+                client_id: 'YOUR_GOOGLE_CLIENT_ID_HERE', // <-- Replace with your real Google Client ID
+                scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+                callback: (response) => {
+                    console.log("Google Token Response: ", response);
+                    alert("Successfully authenticated with Google!\n\nAccess Token: " + response.access_token.substring(0, 20) + "...");
+                    // Redirect or handle login here
+                },
+            });
+            
+            document.getElementById('google-btn-login').addEventListener('click', (e) => {
+                e.preventDefault();
+                client.requestAccessToken();
+            });
+        }
+    };
+</script>
+
+
+</body></html>
