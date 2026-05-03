@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Home - ACEFX</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#2563EB",
+                        "primary-hover": "#1D4ED8",
+                        "background": "#0F172A",
+                        "surface": "rgba(15, 23, 42, 0.7)",
+                        "on-surface-variant": "#9CA3AF",
+                    },
+                    "fontFamily": {
+                        "sans": ["Inter", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            width: 100%;
+            background: linear-gradient(135deg, #0F172A 0%, #020617 100%);
+            color: #E5E7EB;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Reel Container - Full page scroll */
+        .reel-container {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .reel-wrapper {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .reel-wrapper.hero-bg,
+        .hero-section {
+            background-image:
+                linear-gradient(to bottom, rgba(2, 6, 23, 0.3) 0%, rgba(2, 6, 23, 0.85) 100%),
+                url('https://lh3.googleusercontent.com/aida-public/AB6AXuAmt7VzPkcSqxOH_-68IgsaNRCl4Oi6yDM5tk7FL7nqgk6p6kSycbL0treFeK3IUoyzmfWysUoq9ZnZW34H-6W6-UpA-af-Y0nj7YKHI3FDkpxUrBwM35oy7b1wi3LEhV2o7ZFYNv4JwjKhOho0YtCsxm11staGnGYfrvHMMiui2ej5rvxaF9S4mT3HQrRzBM7wAunl-eU9XG-kSCwKUXsTHtzbtm5MBRxQlY6_VZWGO0ZUgco2IfLEj9tNmPvgozFb8QpetYkAxTA');
+            background-size: cover;
+            background-position: center 20%;
+            background-repeat: no-repeat;
+        }
+
+        .reel-content {
+            width: 100%;
+            max-width: 900px;
+            padding: 0 2rem;
+            animation: slideIn 0.6s ease-out;
+            z-index: 10;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Reel Indicators */
+        .reel-indicators {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .reel-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .reel-indicator:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .reel-indicator.active {
+            background: #2563EB;
+            width: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
+        }
+
+        /* Header Glass Effect */
+        .header-glass {
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.92) 0%, rgba(2, 6, 23, 0) 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        /* Sidebar */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 60;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .sidebar-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 18rem;
+            max-width: 80vw;
+            background-color: #0F172A;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 70;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            overflow-y: auto;
+            padding-top: 6rem;
+        }
+
+        .sidebar-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Scroll Hint */
+        .scroll-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 40;
+            animation: bounce 2s infinite;
+            opacity: 0.7;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+
+        .scroll-hint.hide {
+            display: none;
+        }
+
+        /* Reel Projects Background */
+        .reels-bg {
+            background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.15) 0%, rgba(2, 6, 23, 1) 70%);
+        }
+
+        /* ── Reels Swiper ── */
+        .reels-swiper {
+            width: 100%;
+            padding-top: 40px;
+            padding-bottom: 70px;
+            overflow: visible !important;
+        }
+
+        /* Side-edge fade masks */
+        .reels-carousel-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+        .reels-carousel-wrap::before,
+        .reels-carousel-wrap::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 120px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .reels-carousel-wrap::before {
+            left: 0;
+            background: linear-gradient(to right, #0F172A 0%, transparent 100%);
+        }
+        .reels-carousel-wrap::after {
+            right: 0;
+            background: linear-gradient(to left, #0F172A 0%, transparent 100%);
+        }
+
+        /* Base (inactive) slide */
+        .reels-swiper .swiper-slide {
+            width: 240px;
+            height: 426px;
+            border-radius: 20px;
+            background: #000;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.45s ease;
+            filter: brightness(0.3) blur(1px);
+            transform: scale(0.8);
+        }
+
+        /* Adjacent slides (1 away from center) — more visible */
+        .reels-swiper .swiper-slide-prev,
+        .reels-swiper .swiper-slide-next {
+            filter: brightness(0.55) blur(0px);
+            transform: scale(0.88);
+        }
+
+        /* Active center reel */
+        .reels-swiper .swiper-slide-active {
+            filter: brightness(1) blur(0px);
+            transform: scale(1);
+            border: 2px solid #3B82F6;
+            box-shadow: 0 0 50px rgba(59, 130, 246, 0.65);
+        }
+
+        .reels-swiper .video-container {
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .reels-swiper .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .reels-swiper .slide-overlay {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            color: white;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .reels-swiper .slide-overlay h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .reels-swiper .swiper-pagination-bullet {
+            background: #444 !important;
+            opacity: 1;
+            width: 8px;
+            height: 8px;
+        }
+
+        .reels-swiper .swiper-pagination-bullet-active {
+            background: #3B82F6 !important;
+            box-shadow: 0 0 10px #3B82F6;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* Nav Buttons */
+        .reels-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(37, 99, 235, 0.15);
+            border: 1.5px solid rgba(59, 130, 246, 0.4);
+            color: #E5E7EB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+            backdrop-filter: blur(6px);
+        }
+
+        .reels-nav-btn:hover {
+            background: rgba(37, 99, 235, 0.35);
+            border-color: #3B82F6;
+            box-shadow: 0 0 18px rgba(59, 130, 246, 0.5);
+        }
+
+        .reels-nav-btn.prev { left: 16px; }
+        .reels-nav-btn.next { right: 16px; }
+
+        @media (min-width: 768px) {
+            .reels-nav-btn.prev { left: 32px; }
+            .reels-nav-btn.next { right: 32px; }
+        }
+
+        .reels-section-title {
+            text-align: center;
+            color: #E5E7EB;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .reels-section-sub {
+            text-align: center;
+            color: #9CA3AF;
+            font-size: 0.85rem;
+            margin-bottom: 0;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col font-sans">
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity duration-300">
+    </div>
+
+    <!-- Sidebar Menu -->
+    <aside id="sidebar-menu"
+        class="fixed top-0 left-0 h-full w-72 max-w-[80vw] bg-[#0F172A] border-r border-white/10 z-[70] transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col pt-24 shadow-2xl">
+        <nav class="flex-grow flex flex-col gap-1 px-4 overflow-y-auto">
+            <p class="font-label-caps text-[10px] tracking-widest text-on-surface-variant uppercase px-4 mb-2 mt-4">Menu</p>
+
+            <!-- Categories accordion -->
+            <div>
+                <button id="cat-toggle" type="button"
+                    class="w-full px-4 py-3 rounded-lg text-white hover:bg-white/5 transition-colors font-bold text-sm flex items-center justify-between gap-3">
+                    <span class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-[20px]">category</span> Categories
+                    </span>
+                    <span id="cat-arrow" class="material-symbols-outlined text-[18px] transition-transform duration-300">expand_more</span>
+                </button>
+                <div id="cat-submenu" style="display:none;overflow:hidden;transition:max-height 0.3s ease;" class="flex-col gap-0.5 pl-10 pr-2 pb-1">
+                    <a href="#cinematic" onclick="toggleMenu()" class="px-3 py-2 rounded-lg text-[#9CA3AF] hover:text-white hover:bg-white/5 transition-colors text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px]">theaters</span> Cinematic
+                    </a>
+                    <a href="#film" onclick="toggleMenu()" class="px-3 py-2 rounded-lg text-[#9CA3AF] hover:text-white hover:bg-white/5 transition-colors text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px]">movie</span> Film
+                    </a>
+                    <a href="#web-series" onclick="toggleMenu()" class="px-3 py-2 rounded-lg text-[#9CA3AF] hover:text-white hover:bg-white/5 transition-colors text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px]">live_tv</span> Web Series
+                    </a>
+                    <a href="#ad" onclick="toggleMenu()" class="px-3 py-2 rounded-lg text-[#9CA3AF] hover:text-white hover:bg-white/5 transition-colors text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px]">campaign</span> Ad
+                    </a>
+                    <a href="#event" onclick="toggleMenu()" class="px-3 py-2 rounded-lg text-[#9CA3AF] hover:text-white hover:bg-white/5 transition-colors text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[16px]">event</span> Event
+                    </a>
+                </div>
+            </div>
+
+            <a href="#about" onclick="toggleMenu()"
+                class="px-4 py-3 rounded-lg text-white hover:bg-white/5 hover:text-primary transition-colors font-bold text-sm flex items-center gap-3">
+                <span class="material-symbols-outlined text-[20px]">info</span> About Us
+            </a>
+            <a href="#contact" onclick="toggleMenu()"
+                class="px-4 py-3 rounded-lg text-white hover:bg-white/5 hover:text-primary transition-colors font-bold text-sm flex items-center gap-3">
+                <span class="material-symbols-outlined text-[20px]">mail</span> Contact
+            </a>
+            <a href="#process" onclick="toggleMenu()"
+                class="px-4 py-3 rounded-lg text-white hover:bg-white/5 hover:text-primary transition-colors font-bold text-sm flex items-center gap-3">
+                <span class="material-symbols-outlined text-[20px]">account_tree</span> Process
+            </a>
+
+            <div class="h-px bg-white/10 my-4 mx-2"></div>
+
+            <p class="font-label-caps text-[10px] tracking-widest text-on-surface-variant uppercase px-4 mb-2">Account</p>
+            <a href="login.html"
+                class="px-4 py-3 rounded-lg text-white hover:bg-white/5 hover:text-primary transition-colors font-bold text-sm flex items-center gap-3">
+                <span class="material-symbols-outlined text-[20px]">login</span> Login
+            </a>
+            <a href="signup.html"
+                class="px-4 py-3 rounded-lg text-white hover:bg-white/5 hover:text-primary transition-colors font-bold text-sm flex items-center gap-3">
+                <span class="material-symbols-outlined text-[20px]">person_add</span> Sign Up
+            </a>
+            <a href="login.html"
+                class="px-4 py-3 rounded-lg text-primary hover:bg-white/5 transition-colors font-bold text-sm flex items-center gap-3 mt-auto mb-6">
+                <span class="material-symbols-outlined text-[20px]">play_arrow</span> Enter Workspace
+            </a>
+        </nav>
+    </aside>
+    <!-- Fixed Header -->
+    <header id="main-header"
+        class="fixed top-0 left-0 right-0 w-full flex justify-between items-center px-4 sm:px-12 py-4 sm:py-6 z-[80] header-glass">
+        <!-- Left: Nav -->
+        <div class="flex items-center gap-4 lg:gap-8 flex-1">
+            <button id="menu-toggle-btn" class="text-white hover:text-primary transition-colors">
+                <span id="menu-icon" class="material-symbols-outlined text-[24px]">menu</span>
+            </button>
+            <nav
+                class="hidden lg:flex items-center gap-6 xl:gap-8 text-[11px] tracking-[0.15em] font-bold uppercase text-on-surface-variant whitespace-nowrap">
+                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+                <a href="#about" class="hover:text-white transition-colors">About Us</a>
+                <a href="#process" class="hover:text-white transition-colors">Process</a>
+            </nav>
+        </div>
+
+        <!-- Center: Logo -->
+        <div class="flex justify-center flex-none px-2">
+            <a href="index.html"
+                class="text-xl sm:text-2xl font-black tracking-tighter text-white uppercase italic whitespace-nowrap">ACE FX</a>
+        </div>
+
+        <!-- Right: Auth Buttons -->
+        <div class="flex items-center justify-end gap-2 sm:gap-4 flex-1">
+            <a href="login.html"
+                class="px-3 sm:px-6 py-1.5 sm:py-2 rounded text-[#E5E7EB] text-[10px] sm:text-xs font-bold border border-white/20 bg-[#1E293B]/60 hover:bg-white/10 transition-colors whitespace-nowrap">Login</a>
+            <a href="signup.html"
+                class="px-3 sm:px-6 py-1.5 sm:py-2 rounded bg-[#2563EB] text-white text-[10px] sm:text-xs font-bold hover:bg-[#1D4ED8] transition-colors shadow-[0_0_15px_rgba(37,99,235,0.4)] whitespace-nowrap">Sign Up</a>
+        </div>
+    </header>
+
+    <!-- Hero Section (Full Viewport) -->
+    <main class="hero-section relative flex items-center justify-center w-full" style="min-height:100vh;">
+        <!-- Center Content -->
+        <div class="relative z-10 px-4 text-center" style="padding-top:80px;">
+            <h1
+                class="text-[40px] sm:text-[56px] md:text-[72px] lg:text-[84px] font-black tracking-tight uppercase leading-[1.05] mb-6 drop-shadow-2xl" style="color:#E5E7EB;">
+                Crafting Stories With<br>Precision
+            </h1>
+            <p
+                class="text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-lg font-medium" style="color:#9CA3AF;">
+                The new standard in cinematic post-production. Enter a focused environment<br class="hidden md:block">
+                designed for professionals where content is the hero.
+            </p>
+            <a href="login.html"
+                class="inline-flex items-center gap-2 text-white px-8 py-4 rounded text-xs font-bold uppercase tracking-widest transition-colors" style="background:#2563EB;box-shadow:0 0 20px rgba(37,99,235,0.45);" onmouseover="this.style.background='#1D4ED8'" onmouseout="this.style.background='#2563EB'">
+                <span class="material-symbols-outlined text-[18px]">play_arrow</span>
+                Enter Workspace
+            </a>
+        </div>
+
+
+    </main>
+
+    <!-- Reels Carousel Section -->
+    <section class="w-full bg-[#020617] reels-bg py-14 md:py-20 relative">
+        <!-- Section Header -->
+        <div class="text-center mb-2 px-4">
+            <p class="reels-section-sub">Our Work</p>
+            <h2 class="reels-section-title">Featured Reels</h2>
+        </div>
+
+        <!-- Carousel Wrapper with Nav Buttons & Edge Fades -->
+        <div class="reels-carousel-wrap relative">
+            <!-- Prev Button -->
+            <button id="reels-prev" class="reels-nav-btn prev">
+                <span class="material-symbols-outlined" style="font-size:28px;">chevron_left</span>
+            </button>
+            <!-- Next Button -->
+            <button id="reels-next" class="reels-nav-btn next">
+                <span class="material-symbols-outlined" style="font-size:28px;">chevron_right</span>
+            </button>
+
+        <!-- Swiper Carousel -->
+        <div class="swiper reels-swiper">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <div class="video-container" id="reel-player1" data-video-id="VIDEO_ID_1"></div>
+                    <div class="slide-overlay">
+                        <p style="color:#60A5FA;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">Commercial</p>
+                        <h3>Palm Shadows</h3>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <div class="video-container" id="reel-player2" data-video-id="VIDEO_ID_2"></div>
+                    <div class="slide-overlay">
+                        <p style="color:#60A5FA;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">Brand Film</p>
+                        <h3>Bold Confidence</h3>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide">
+                    <div class="video-container" id="reel-player3" data-video-id="VIDEO_ID_3"></div>
+                    <div class="slide-overlay">
+                        <p style="color:#60A5FA;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">Brand Film</p>
+                        <h3>Summer Collection</h3>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="swiper-slide">
+                    <div class="video-container" id="reel-player4" data-video-id="VIDEO_ID_4"></div>
+                    <div class="slide-overlay">
+                        <p style="color:#60A5FA;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">Campaign</p>
+                        <h3>Pure Elegance</h3>
+                    </div>
+                </div>
+                <!-- Slide 5 -->
+                <div class="swiper-slide">
+                    <div class="video-container" id="reel-player5" data-video-id="VIDEO_ID_5"></div>
+                    <div class="slide-overlay">
+                        <p style="color:#60A5FA;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">Architecture</p>
+                        <h3>Urban Harmony</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- Pagination Dots -->
+            <div class="swiper-pagination"></div>
+        </div>
+        </div> <!-- end relative wrapper -->
+    </section>
+
+    <!-- Workspace Video Section -->
+    <section id="cinematic" class="workspace-section">
+        <div class="workspace-inner">
+
+            <!-- LEFT: Video -->
+            <div class="ws-video-col">
+                <div class="ws-video-box">
+                    <iframe
+                        src="https://www.youtube.com/embed/xeXV1KoX034?autoplay=1&mute=1&controls=0&loop=1&playlist=xeXV1KoX034&modestbranding=1&rel=0"
+                        allow="autoplay; encrypted-media"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- RIGHT: Content -->
+            <div class="ws-content-col">
+                <h2 class="ws-heading" style="font-size:clamp(2rem,4vw,3rem);margin-bottom:10px;">Cinematic</h2>
+                <p class="ws-label" style="margin-bottom:18px;">Where every frame tells a story</p>
+                <p class="ws-desc">From breathtaking visual narratives to high-impact brand films — AceFX crafts cinematic experiences that move audiences, frame by frame. Precision editing, colour grading, and storytelling at its finest.</p>
+                <div class="ws-buttons">
+                    <a href="login.html" class="ws-btn ws-btn-primary">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:middle;margin-right:6px;">play_arrow</span>Watch More
+                    </a>
+                    <a href="signup.html" class="ws-btn ws-btn-secondary">Get Started</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Film Section -->
+    <section id="film" class="workspace-section ws-alt">
+        <div class="workspace-inner ws-reverse">
+
+            <!-- RIGHT (visually left due to reverse): Content -->
+            <div class="ws-content-col">
+                <h2 class="ws-heading" style="font-size:clamp(2rem,4vw,3rem);margin-bottom:10px;">Film</h2>
+                <p class="ws-label" style="margin-bottom:18px;">Stories that live beyond the screen</p>
+                <p class="ws-desc">From short films to feature-length productions, AceFX delivers world-class film post-production. Expert colour grading, sound design, and narrative editing that bring your creative vision to life — exactly as you imagined it.</p>
+                <div class="ws-buttons">
+                    <a href="login.html" class="ws-btn ws-btn-primary">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:middle;margin-right:6px;">play_arrow</span>Watch More
+                    </a>
+                    <a href="signup.html" class="ws-btn ws-btn-secondary">Get Started</a>
+                </div>
+            </div>
+
+            <!-- LEFT (visually right): Video -->
+            <div class="ws-video-col">
+                <div class="ws-video-box">
+                    <iframe
+                        src="https://www.youtube.com/embed/_zjcWoJ5YXA?autoplay=1&mute=1&controls=0&loop=1&playlist=_zjcWoJ5YXA&modestbranding=1&rel=0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Web Series Section -->
+    <section id="web-series" class="workspace-section">
+        <div class="workspace-inner">
+
+            <!-- LEFT: Video -->
+            <div class="ws-video-col">
+                <div class="ws-video-box">
+                    <iframe
+                        src="https://www.youtube.com/embed/mPax70y5X7E?autoplay=1&mute=1&controls=0&loop=1&playlist=mPax70y5X7E&modestbranding=1&rel=0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- RIGHT: Content -->
+            <div class="ws-content-col">
+                <h2 class="ws-heading" style="font-size:clamp(2rem,4vw,3rem);margin-bottom:10px;">Web Series</h2>
+                <p class="ws-label" style="margin-bottom:18px;">Binge-worthy content, episode after episode</p>
+                <p class="ws-desc">We craft compelling web series with consistent visual language, episode-to-episode continuity, and platform-ready delivery. Built for OTT, YouTube, and beyond — audiences keep coming back.</p>
+                <div class="ws-buttons">
+                    <a href="login.html" class="ws-btn ws-btn-primary">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:middle;margin-right:6px;">play_arrow</span>Watch More
+                    </a>
+                    <a href="signup.html" class="ws-btn ws-btn-secondary">Get Started</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Ad Section -->
+    <section id="ad" class="workspace-section ws-alt">
+        <div class="workspace-inner ws-reverse">
+
+            <!-- Content -->
+            <div class="ws-content-col">
+                <h2 class="ws-heading" style="font-size:clamp(2rem,4vw,3rem);margin-bottom:10px;">Ad</h2>
+                <p class="ws-label" style="margin-bottom:18px;">Campaigns that convert</p>
+                <p class="ws-desc">High-impact commercial edits, branded content, and social ads that stop the scroll. We blend creative storytelling with strategic pacing to deliver ads that don't just look great — they perform.</p>
+                <div class="ws-buttons">
+                    <a href="login.html" class="ws-btn ws-btn-primary">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:middle;margin-right:6px;">play_arrow</span>Watch More
+                    </a>
+                    <a href="signup.html" class="ws-btn ws-btn-secondary">Get Started</a>
+                </div>
+            </div>
+
+            <!-- Video -->
+            <div class="ws-video-col">
+                <div class="ws-video-box">
+                    <iframe
+                        src="https://www.youtube.com/embed/uykVxooNL70?autoplay=1&mute=1&controls=0&loop=1&playlist=uykVxooNL70&modestbranding=1&rel=0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Event Section -->
+    <section id="event" class="workspace-section">
+        <div class="workspace-inner">
+
+            <!-- LEFT: Video -->
+            <div class="ws-video-col">
+                <div class="ws-video-box">
+                    <iframe
+                        src="https://www.youtube.com/embed/BOG_CbEDhag?autoplay=1&mute=1&controls=0&loop=1&playlist=BOG_CbEDhag&modestbranding=1&rel=0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- RIGHT: Content -->
+            <div class="ws-content-col">
+                <h2 class="ws-heading" style="font-size:clamp(2rem,4vw,3rem);margin-bottom:10px;">Event</h2>
+                <p class="ws-label" style="margin-bottom:18px;">Moments captured, memories preserved</p>
+                <p class="ws-desc">From corporate events to live concerts, AceFX transforms raw footage into polished event films. Multi-camera edits, highlight reels, and full-length coverage — all delivered with cinematic precision.</p>
+                <div class="ws-buttons">
+                    <a href="login.html" class="ws-btn ws-btn-primary">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:middle;margin-right:6px;">play_arrow</span>Watch More
+                    </a>
+                    <a href="signup.html" class="ws-btn ws-btn-secondary">Get Started</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══ ABOUT US ══ -->
+    <section id="about" style="background:#0F172A;padding:90px 0;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="max-width:1100px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:64px;flex-wrap:wrap;">
+            <!-- Left: Text -->
+            <div style="flex:1 1 420px;">
+                <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#60A5FA;margin:0 0 12px;">Who We Are</p>
+                <h2 style="font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:#E5E7EB;line-height:1.2;letter-spacing:-0.02em;margin:0 0 20px;">AceFX — Where Craft Meets Cinema</h2>
+                <p style="color:#9CA3AF;font-size:1rem;line-height:1.75;margin:0 0 18px;">AceFX is a premium post-production studio based in Mumbai, India. We specialise in crafting cinematic content across film, brand advertising, web series, and live events — delivering precision editing, professional colour grading, and immersive sound design.</p>
+                <p style="color:#9CA3AF;font-size:1rem;line-height:1.75;margin:0 0 32px;">Founded by a team of passionate filmmakers and editors, our mission is simple — to elevate every frame and help creators tell stories that resonate globally.</p>
+                <div style="display:flex;gap:32px;flex-wrap:wrap;">
+                    <div>
+                        <p style="font-size:2rem;font-weight:800;color:#2563EB;margin:0;">200+</p>
+                        <p style="color:#9CA3AF;font-size:0.85rem;margin:4px 0 0;">Projects Delivered</p>
+                    </div>
+                    <div>
+                        <p style="font-size:2rem;font-weight:800;color:#2563EB;margin:0;">50+</p>
+                        <p style="color:#9CA3AF;font-size:0.85rem;margin:4px 0 0;">Brands Served</p>
+                    </div>
+                    <div>
+                        <p style="font-size:2rem;font-weight:800;color:#2563EB;margin:0;">8+</p>
+                        <p style="color:#9CA3AF;font-size:0.85rem;margin:4px 0 0;">Years Experience</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Right: Highlight card -->
+            <div style="flex:1 1 300px;background:linear-gradient(135deg,#1E293B,#0F172A);border:1px solid rgba(59,130,246,0.2);border-radius:20px;padding:36px;box-shadow:0 0 40px rgba(37,99,235,0.12);">
+                <span class="material-symbols-outlined" style="font-size:40px;color:#2563EB;display:block;margin-bottom:16px;">movie_filter</span>
+                <h3 style="color:#E5E7EB;font-size:1.2rem;font-weight:700;margin:0 0 10px;">Full-Service Post Production</h3>
+                <p style="color:#9CA3AF;font-size:0.9rem;line-height:1.7;margin:0 0 20px;">From raw footage to final export — we handle editing, grading, VFX, sound, and delivery, all under one roof.</p>
+                <span class="material-symbols-outlined" style="font-size:40px;color:#2563EB;display:block;margin-bottom:16px;">groups</span>
+                <h3 style="color:#E5E7EB;font-size:1.2rem;font-weight:700;margin:0 0 10px;">A Team of Storytellers</h3>
+                <p style="color:#9CA3AF;font-size:0.9rem;line-height:1.7;margin:0;">Every project is handled by experienced editors who understand both the technical and narrative craft of filmmaking.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ PROCESS ══ -->
+    <section id="process" style="background:#020617;padding:90px 0;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="max-width:1100px;margin:0 auto;padding:0 32px;">
+            <div style="text-align:center;margin-bottom:56px;">
+                <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#60A5FA;margin:0 0 10px;">How We Work</p>
+                <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;color:#E5E7EB;margin:0;letter-spacing:-0.02em;">Our Creative Process</h2>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;">
+                <!-- Step 1 -->
+                <div style="background:#0F172A;border:1px solid rgba(59,130,246,0.15);border-radius:16px;padding:32px 24px;position:relative;transition:box-shadow 0.3s;" onmouseover="this.style.boxShadow='0 0 28px rgba(37,99,235,0.2)'" onmouseout="this.style.boxShadow='none'">
+                    <div style="width:44px;height:44px;background:rgba(37,99,235,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                        <span class="material-symbols-outlined" style="color:#3B82F6;font-size:22px;">description</span>
+                    </div>
+                    <p style="font-size:0.7rem;color:#3B82F6;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin:0 0 8px;">Step 01</p>
+                    <h3 style="color:#E5E7EB;font-size:1.05rem;font-weight:700;margin:0 0 10px;">Brief & Discovery</h3>
+                    <p style="color:#9CA3AF;font-size:0.88rem;line-height:1.65;margin:0;">We start by understanding your vision, goals, audience, and deliverables through a detailed onboarding call.</p>
+                </div>
+                <!-- Step 2 -->
+                <div style="background:#0F172A;border:1px solid rgba(59,130,246,0.15);border-radius:16px;padding:32px 24px;position:relative;transition:box-shadow 0.3s;" onmouseover="this.style.boxShadow='0 0 28px rgba(37,99,235,0.2)'" onmouseout="this.style.boxShadow='none'">
+                    <div style="width:44px;height:44px;background:rgba(37,99,235,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                        <span class="material-symbols-outlined" style="color:#3B82F6;font-size:22px;">cut</span>
+                    </div>
+                    <p style="font-size:0.7rem;color:#3B82F6;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin:0 0 8px;">Step 02</p>
+                    <h3 style="color:#E5E7EB;font-size:1.05rem;font-weight:700;margin:0 0 10px;">Editing & Assembly</h3>
+                    <p style="color:#9CA3AF;font-size:0.88rem;line-height:1.65;margin:0;">Our editors build the rough cut, focusing on pacing, structure, and storytelling that aligns with your brief.</p>
+                </div>
+                <!-- Step 3 -->
+                <div style="background:#0F172A;border:1px solid rgba(59,130,246,0.15);border-radius:16px;padding:32px 24px;position:relative;transition:box-shadow 0.3s;" onmouseover="this.style.boxShadow='0 0 28px rgba(37,99,235,0.2)'" onmouseout="this.style.boxShadow='none'">
+                    <div style="width:44px;height:44px;background:rgba(37,99,235,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                        <span class="material-symbols-outlined" style="color:#3B82F6;font-size:22px;">palette</span>
+                    </div>
+                    <p style="font-size:0.7rem;color:#3B82F6;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin:0 0 8px;">Step 03</p>
+                    <h3 style="color:#E5E7EB;font-size:1.05rem;font-weight:700;margin:0 0 10px;">Colour & Sound</h3>
+                    <p style="color:#9CA3AF;font-size:0.88rem;line-height:1.65;margin:0;">Professional colour grading and sound design are applied to give your film a polished, cinematic finish.</p>
+                </div>
+                <!-- Step 4 -->
+                <div style="background:#0F172A;border:1px solid rgba(59,130,246,0.15);border-radius:16px;padding:32px 24px;position:relative;transition:box-shadow 0.3s;" onmouseover="this.style.boxShadow='0 0 28px rgba(37,99,235,0.2)'" onmouseout="this.style.boxShadow='none'">
+                    <div style="width:44px;height:44px;background:rgba(37,99,235,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                        <span class="material-symbols-outlined" style="color:#3B82F6;font-size:22px;">reviews</span>
+                    </div>
+                    <p style="font-size:0.7rem;color:#3B82F6;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin:0 0 8px;">Step 04</p>
+                    <h3 style="color:#E5E7EB;font-size:1.05rem;font-weight:700;margin:0 0 10px;">Review & Revisions</h3>
+                    <p style="color:#9CA3AF;font-size:0.88rem;line-height:1.65;margin:0;">You review the cut and share feedback. We action revisions quickly until you're fully satisfied.</p>
+                </div>
+                <!-- Step 5 -->
+                <div style="background:#0F172A;border:1px solid rgba(59,130,246,0.15);border-radius:16px;padding:32px 24px;position:relative;transition:box-shadow 0.3s;" onmouseover="this.style.boxShadow='0 0 28px rgba(37,99,235,0.2)'" onmouseout="this.style.boxShadow='none'">
+                    <div style="width:44px;height:44px;background:rgba(37,99,235,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                        <span class="material-symbols-outlined" style="color:#3B82F6;font-size:22px;">rocket_launch</span>
+                    </div>
+                    <p style="font-size:0.7rem;color:#3B82F6;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin:0 0 8px;">Step 05</p>
+                    <h3 style="color:#E5E7EB;font-size:1.05rem;font-weight:700;margin:0 0 10px;">Final Delivery</h3>
+                    <p style="color:#9CA3AF;font-size:0.88rem;line-height:1.65;margin:0;">Final files are exported in your required formats and delivered securely, on time, ready to publish.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ CONTACT ══ -->
+    <section id="contact" style="background:#0B1220;padding:90px 0;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="max-width:1100px;margin:0 auto;padding:0 32px;display:flex;gap:60px;flex-wrap:wrap;align-items:flex-start;">
+
+            <!-- Left: Info -->
+            <div style="flex:1 1 300px;">
+                <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#60A5FA;margin:0 0 12px;">Get In Touch</p>
+                <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;color:#E5E7EB;margin:0 0 16px;letter-spacing:-0.02em;">Let's Create Something Great</h2>
+                <p style="color:#9CA3AF;font-size:1rem;line-height:1.7;margin:0 0 36px;">Have a project in mind? Drop us a message and our team will get back to you within 24 hours.</p>
+
+                <div style="display:flex;flex-direction:column;gap:20px;">
+                    <div style="display:flex;align-items:flex-start;gap:14px;">
+                        <div style="width:40px;height:40px;background:rgba(37,99,235,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <span class="material-symbols-outlined" style="color:#3B82F6;font-size:20px;">location_on</span>
+                        </div>
+                        <div>
+                            <p style="color:#E5E7EB;font-weight:600;font-size:0.9rem;margin:0 0 2px;">Address</p>
+                            <p style="color:#9CA3AF;font-size:0.88rem;margin:0;line-height:1.5;">Mumbai, Maharashtra, India</p>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:14px;">
+                        <div style="width:40px;height:40px;background:rgba(37,99,235,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <span class="material-symbols-outlined" style="color:#3B82F6;font-size:20px;">mail</span>
+                        </div>
+                        <div>
+                            <p style="color:#E5E7EB;font-weight:600;font-size:0.9rem;margin:0 0 2px;">Email</p>
+                            <p style="color:#9CA3AF;font-size:0.88rem;margin:0;">hello@acefx.in</p>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:14px;">
+                        <div style="width:40px;height:40px;background:rgba(37,99,235,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <span class="material-symbols-outlined" style="color:#3B82F6;font-size:20px;">schedule</span>
+                        </div>
+                        <div>
+                            <p style="color:#E5E7EB;font-weight:600;font-size:0.9rem;margin:0 0 2px;">Working Hours</p>
+                            <p style="color:#9CA3AF;font-size:0.88rem;margin:0;">Mon – Sat, 10:00 AM – 7:00 PM IST</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Form -->
+            <div style="flex:1 1 380px;background:#0F172A;border:1px solid rgba(59,130,246,0.18);border-radius:20px;padding:40px;box-shadow:0 0 40px rgba(37,99,235,0.1);">
+                <form onsubmit="handleContact(event)" style="display:flex;flex-direction:column;gap:18px;">
+                    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+                        <div style="flex:1 1 140px;">
+                            <label style="display:block;color:#9CA3AF;font-size:0.8rem;font-weight:600;margin-bottom:6px;letter-spacing:0.05em;">First Name</label>
+                            <input type="text" placeholder="John" required style="width:100%;background:#1E293B;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 14px;color:#E5E7EB;font-size:0.9rem;outline:none;box-sizing:border-box;transition:border-color 0.2s;" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                        </div>
+                        <div style="flex:1 1 140px;">
+                            <label style="display:block;color:#9CA3AF;font-size:0.8rem;font-weight:600;margin-bottom:6px;letter-spacing:0.05em;">Last Name</label>
+                            <input type="text" placeholder="Doe" required style="width:100%;background:#1E293B;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 14px;color:#E5E7EB;font-size:0.9rem;outline:none;box-sizing:border-box;transition:border-color 0.2s;" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                        </div>
+                    </div>
+                    <div>
+                        <label style="display:block;color:#9CA3AF;font-size:0.8rem;font-weight:600;margin-bottom:6px;letter-spacing:0.05em;">Email Address</label>
+                        <input type="email" placeholder="john@example.com" required style="width:100%;background:#1E293B;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 14px;color:#E5E7EB;font-size:0.9rem;outline:none;box-sizing:border-box;transition:border-color 0.2s;" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                    </div>
+                    <div>
+                        <label style="display:block;color:#9CA3AF;font-size:0.8rem;font-weight:600;margin-bottom:6px;letter-spacing:0.05em;">Category</label>
+                        <select required style="width:100%;background:#1E293B;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 14px;color:#E5E7EB;font-size:0.9rem;outline:none;box-sizing:border-box;transition:border-color 0.2s;appearance:none;" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="cinematic">Cinematic</option>
+                            <option value="film">Film</option>
+                            <option value="web-series">Web Series</option>
+                            <option value="ad">Ad</option>
+                            <option value="event">Event</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display:block;color:#9CA3AF;font-size:0.8rem;font-weight:600;margin-bottom:6px;letter-spacing:0.05em;">Message</label>
+                        <textarea placeholder="Tell us about your project..." required rows="4" style="width:100%;background:#1E293B;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 14px;color:#E5E7EB;font-size:0.9rem;outline:none;box-sizing:border-box;resize:vertical;transition:border-color 0.2s;font-family:inherit;" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+                    </div>
+                    <button type="submit" style="background:#2563EB;color:#fff;border:none;border-radius:8px;padding:13px 24px;font-size:0.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 0.22s,box-shadow 0.22s;box-shadow:0 0 20px rgba(37,99,235,0.35);" onmouseover="this.style.background='#1D4ED8'" onmouseout="this.style.background='#2563EB'">
+                        <span class="material-symbols-outlined" style="font-size:18px;">send</span> Send Message
+                    </button>
+                    <div id="contact-success" style="display:none;text-align:center;color:#34D399;font-size:0.9rem;font-weight:600;padding:10px;background:rgba(52,211,153,0.08);border-radius:8px;border:1px solid rgba(52,211,153,0.2);">
+                        ✅ Message sent! We'll get back to you within 24 hours.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <footer style="background:#020617;border-top:1px solid rgba(255,255,255,0.06);padding:40px 32px;text-align:center;">
+        <p style="color:#E5E7EB;font-size:1.1rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;margin:0 0 8px;">ACE FX</p>
+        <p style="color:#9CA3AF;font-size:0.82rem;margin:0 0 20px;">Mumbai, Maharashtra, India &nbsp;·&nbsp; hello@acefx.in</p>
+        <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:20px;">
+            <a href="#cinematic" style="color:#9CA3AF;text-decoration:none;font-size:0.82rem;hover:color:#E5E7EB;">Cinematic</a>
+            <a href="#film" style="color:#9CA3AF;text-decoration:none;font-size:0.82rem;">Film</a>
+            <a href="#web-series" style="color:#9CA3AF;text-decoration:none;font-size:0.82rem;">Web Series</a>
+            <a href="#ad" style="color:#9CA3AF;text-decoration:none;font-size:0.82rem;">Ad</a>
+            <a href="#event" style="color:#9CA3AF;text-decoration:none;font-size:0.82rem;">Event</a>
+            <a href="#about" style="color:#9CA3AF;text-decoration:none;font-size:0.82rem;">About</a>
+            <a href="#contact" style="color:#9CA3AF;text-decoration:none;font-size:0.82rem;">Contact</a>
+        </div>
+        <p style="color:#4B5563;font-size:0.78rem;margin:0;">© 2025 AceFX. All rights reserved.</p>
+    </footer>
+
+    <style>
+
+        .workspace-section {
+            background: #020617;
+            padding: 80px 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .workspace-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+        .ws-video-col {
+            flex: 1 1 50%;
+        }
+        .ws-video-box {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(59,130,246,0.25);
+            box-shadow: 0 0 40px rgba(37,99,235,0.2);
+        }
+        .ws-video-box iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        .ws-content-col {
+            flex: 1 1 50%;
+        }
+        .ws-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #60A5FA;
+            margin: 0 0 12px;
+        }
+        .ws-heading {
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 800;
+            line-height: 1.2;
+            color: #E5E7EB;
+            margin: 0 0 18px;
+            letter-spacing: -0.02em;
+        }
+        .ws-desc {
+            color: #9CA3AF;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin: 0 0 32px;
+        }
+        .ws-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .ws-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.22s, box-shadow 0.22s;
+        }
+        .ws-btn-primary {
+            background: #2563EB;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(37,99,235,0.4);
+        }
+        .ws-btn-primary:hover {
+            background: #1D4ED8;
+            box-shadow: 0 0 30px rgba(37,99,235,0.6);
+        }
+        .ws-btn-secondary {
+            background: #1E293B;
+            color: #E5E7EB;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .ws-btn-secondary:hover {
+            background: #2D3F55;
+        }
+        @media (max-width: 768px) {
+            .workspace-inner {
+                flex-direction: column;
+                gap: 36px;
+            }
+            .ws-video-col, .ws-content-col {
+                flex: none;
+                width: 100%;
+            }
+            .ws-reverse { flex-direction: column !important; }
+        }
+        .ws-alt {
+            background: #0B1220;
+        }
+        .ws-reverse {
+            flex-direction: row-reverse;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // Initialize Reels Swiper
+        const reelsSwiper = new Swiper('.reels-swiper', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            loop: true,
+            coverflowEffect: {
+                rotate: 10,
+                stretch: -30,
+                depth: 100,
+                modifier: 1,
+                slideShadows: false,
+            },
+            autoplay: {
+                delay: 8000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.reels-swiper .swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '#reels-next',
+                prevEl: '#reels-prev',
+            },
+        });
+
+        // YouTube API
+        let reelPlayers = [];
+        function onYouTubeIframeAPIReady() {
+            document.querySelectorAll('.reels-swiper .video-container').forEach((el, index) => {
+                const videoId = el.getAttribute('data-video-id');
+                reelPlayers[index] = new YT.Player(el.id, {
+                    videoId: videoId,
+                    playerVars: {
+                        'autoplay': 1,
+                        'mute': 1,
+                        'controls': 0,
+                        'loop': 1,
+                        'playlist': videoId,
+                        'modestbranding': 1,
+                        'rel': 0
+                    }
+                });
+            });
+        }
+
+        const menuBtn = document.getElementById('menu-toggle-btn');
+        const menuIcon = document.getElementById('menu-icon');
+        const sidebar = document.getElementById('sidebar-menu');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+
+            if (isMenuOpen) {
+                // Open Menu
+                menuIcon.textContent = 'close';
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+                overlay.classList.remove('hidden');
+                // Small delay for fade in
+                setTimeout(() => {
+                    overlay.classList.remove('opacity-0');
+                    overlay.classList.add('opacity-100');
+                }, 10);
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Close Menu
+                menuIcon.textContent = 'menu';
+                sidebar.classList.remove('translate-x-0');
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('opacity-0');
+                // Wait for fade out
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 300);
+                document.body.style.overflow = '';
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Contact form handler
+        function handleContact(e) {
+            e.preventDefault();
+            const success = document.getElementById('contact-success');
+            success.style.display = 'block';
+            e.target.reset();
+            setTimeout(() => { success.style.display = 'none'; }, 5000);
+        }
+
+        // Categories accordion toggle
+        const catToggle = document.getElementById('cat-toggle');
+        const catSubmenu = document.getElementById('cat-submenu');
+        const catArrow = document.getElementById('cat-arrow');
+        let catOpen = false;
+
+        catToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            catOpen = !catOpen;
+            if (catOpen) {
+                catSubmenu.style.display = 'flex';
+                catSubmenu.style.flexDirection = 'column';
+                catArrow.style.transform = 'rotate(180deg)';
+            } else {
+                catSubmenu.style.display = 'none';
+                catArrow.style.transform = 'rotate(0deg)';
+            }
+        });
+    </script>
+</body>
+
+</html>
