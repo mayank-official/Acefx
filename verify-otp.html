@@ -1,0 +1,308 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Verify OTP - ACE FX</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#62259b",
+                        "on-tertiary-fixed-variant": "#444173",
+                        "on-background": "#e5e1e4",
+                        "surface-container-high": "#2a2a2c",
+                        "on-secondary": "#490081",
+                        "surface-bright": "#39393b",
+                        "on-primary-fixed": "#25005a",
+                        "on-surface": "#e5e1e4",
+                        "inverse-on-surface": "#313032",
+                        "surface-tint": "#d2bbff",
+                        "surface-container-highest": "#353437",
+                        "secondary-fixed-dim": "#ddb8ff",
+                        "background": "#131315",
+                        "primary-container": "#7c3aed",
+                        "outline": "#958da1",
+                        "on-secondary-fixed": "#2c0051",
+                        "on-surface-variant": "#ccc3d8",
+                        "surface-container": "#201f22",
+                        "surface": "#131315",
+                        "primary": "#d2bbff",
+                        "surface-variant": "#353437",
+                        "tertiary-container": "#646195",
+                        "on-secondary-container": "#d1a1ff",
+                        "primary-fixed-dim": "#d2bbff",
+                        "primary-fixed": "#eaddff",
+                        "tertiary-fixed": "#e3dfff",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#2d2a5b",
+                        "on-tertiary-container": "#e7e3ff",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "secondary-fixed": "#f0dbff",
+                        "tertiary-fixed-dim": "#c4c1fb",
+                        "outline-variant": "#4a4455",
+                        "surface-dim": "#131315",
+                        "inverse-surface": "#e5e1e4",
+                        "on-primary-container": "#ede0ff",
+                        "on-primary": "#3f008e",
+                        "surface-container-low": "#1c1b1d",
+                        "error-container": "#93000a",
+                        "secondary": "#ddb8ff",
+                        "on-error": "#690005",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#732ee4",
+                        "secondary-container": "#62259b",
+                        "tertiary": "#c4c1fb",
+                        "on-tertiary-fixed": "#181445",
+                        "surface-container-lowest": "#0e0e10"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "48px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "unit": "4px",
+                        "container-max": "1440px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "2xl": "80px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "button": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"],
+                        "h1": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "button": ["14px", { "lineHeight": "1.0", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h3": ["32px", { "lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "h1": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #131315; /* background */
+            color: #e5e1e4; /* on-background */
+        }
+        
+        .glass-panel {
+            background: rgba(24, 24, 27, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .input-recessed {
+            background: #1c1b1d !important; /* surface-container-low */
+            color: #e5e1e4 !important;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5) !important;
+            border: 1px solid #353437 !important; /* surface-variant */
+        }
+        
+        .input-recessed:focus {
+            border-color: #d2bbff !important; /* primary */
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 0 15px rgba(210, 187, 255, 0.2) !important;
+            outline: none !important;
+        }
+
+        /* Remove default spin buttons for number inputs */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px #1c1b1d inset !important;
+            -webkit-text-fill-color: #e5e1e4 !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #5a00c6);
+            border: 1px solid rgba(210, 187, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-md lg:p-0">
+<main class="w-full h-screen flex flex-col lg:flex-row overflow-hidden bg-background">
+<!-- Left Side: Cinematic Image -->
+<section class="hidden lg:block lg:w-1/2 relative h-full">
+<div class="absolute inset-0 z-10 bg-gradient-to-r from-transparent to-background"></div>
+<img alt="Cinematic Film Studio" class="w-full h-full object-cover" data-alt="A high-contrast cinematic shot of a professional film studio interior, dominated by deep shadows and stark directional lighting. The scene features high-end camera equipment and studio monitors glowing in the dark, creating a moody, professional atmosphere. The color palette emphasizes rich blacks, cool metallic tones, and subtle anamorphic lens flares in deep purple and violet hues. The aesthetic is extremely premium, minimalist, and perfectly aligns with a dark-mode video editing suite." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6xEDJ7_9OUU0Wj10NnrLrJr8IzFKNk9v_Gifph1q0dZBP66t2sG6L8JxXdggJqTEv7CS31LiNKCBVFDHwrdvBvFHnDI5xLEtzHyOOFWgFZhaEA2F0Fd3lnTm3N8_dCDeaL9ZWgGPWs7Lbn4tINQVdD4hbswE78vfmgv9dne0GSz-_UlwmVagwa0kzT8UebOweo0tq_rS9Wpm_TGnMZ57OEDfmUBNMLzwtKFAZupwW-Jp3ZeI9eduDGaFYW5hlA6RL_v4syhldmA4">
+<div class="absolute top-8 sm:top-12 left-8 sm:left-12 z-20">
+<a class="text-xl sm:text-2xl font-black tracking-tighter text-white uppercase italic" href="index.html">ACE FX</a>
+</div>
+<div class="absolute bottom-xl left-xl z-20 max-w-md">
+<h2 class="font-h2 text-h2 text-on-surface mb-sm drop-shadow-xl">Craft Your Vision.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant drop-shadow-md">Join the elite platform for cinematic video editing and color grading.</p>
+</div>
+</section>
+<!-- Right Side: OTP Form -->
+<section class="w-full lg:w-1/2 h-full flex flex-col justify-center items-center px-4 sm:px-6 md:px-lg py-8 sm:py-2xl lg:px-2xl relative overflow-y-auto">
+<!-- Mobile Logo -->
+<div class="lg:hidden mb-8 flex justify-center w-full max-w-md">
+<a class="text-xl sm:text-2xl font-black tracking-tighter text-white uppercase italic" href="index.html">ACE FX</a>
+</div>
+<div class="w-full max-w-md glass-panel p-6 sm:p-xl rounded-xl relative z-10">
+<div class="mb-6 sm:mb-lg text-center flex flex-col items-center">
+    <div class="w-16 h-16 mb-4 bg-surface-container-high rounded-full flex items-center justify-center border border-outline-variant shadow-[0_0_15px_rgba(210,187,255,0.1)]">
+        <span class="material-symbols-outlined text-[32px] text-primary">mark_email_read</span>
+    </div>
+    <h1 class="font-h3 text-xl sm:text-h3 text-on-surface mb-2 sm:mb-xs">Verify Your Account</h1>
+    <p class="font-body-md text-sm sm:text-body-md text-on-surface-variant leading-relaxed">We've sent a 6-digit verification code to <br><span class="text-on-surface font-semibold">editor@studio.com</span></p>
+</div>
+<form class="space-y-6 sm:space-y-8" id="otp-form">
+    <div class="flex justify-between gap-2 sm:gap-3">
+        <input class="w-12 h-14 sm:w-14 sm:h-16 text-center input-recessed rounded-lg font-h3 text-xl sm:text-2xl text-on-surface placeholder-outline-variant focus:ring-0 transition-all otp-input" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" required autofocus>
+        <input class="w-12 h-14 sm:w-14 sm:h-16 text-center input-recessed rounded-lg font-h3 text-xl sm:text-2xl text-on-surface placeholder-outline-variant focus:ring-0 transition-all otp-input" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+        <input class="w-12 h-14 sm:w-14 sm:h-16 text-center input-recessed rounded-lg font-h3 text-xl sm:text-2xl text-on-surface placeholder-outline-variant focus:ring-0 transition-all otp-input" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+        <input class="w-12 h-14 sm:w-14 sm:h-16 text-center input-recessed rounded-lg font-h3 text-xl sm:text-2xl text-on-surface placeholder-outline-variant focus:ring-0 transition-all otp-input" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+        <input class="w-12 h-14 sm:w-14 sm:h-16 text-center input-recessed rounded-lg font-h3 text-xl sm:text-2xl text-on-surface placeholder-outline-variant focus:ring-0 transition-all otp-input" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+        <input class="w-12 h-14 sm:w-14 sm:h-16 text-center input-recessed rounded-lg font-h3 text-xl sm:text-2xl text-on-surface placeholder-outline-variant focus:ring-0 transition-all otp-input" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+    </div>
+    
+    <button class="w-full btn-primary rounded-lg py-3 sm:py-md font-button text-button text-on-primary-fixed uppercase tracking-wider flex items-center justify-center gap-2 sm:gap-sm text-xs sm:text-button shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:shadow-[0_0_25px_rgba(124,58,237,0.5)]" type="submit">
+        <span>Verify Code</span>
+        <span class="material-symbols-outlined text-[18px] sm:text-[20px]" data-icon="check_circle" data-weight="fill">check_circle</span>
+    </button>
+</form>
+
+<p class="font-body-md text-on-surface-variant text-xs sm:text-body-md text-center mt-6 sm:mt-8">
+    Didn't receive the code? <br class="sm:hidden"><button class="text-primary hover:text-primary-fixed transition-colors font-semibold disabled:opacity-50 mt-1 sm:mt-0" id="resend-btn" disabled>Resend in <span id="timer">30</span>s</button>
+</p>
+<p class="font-body-md text-on-surface-variant text-xs sm:text-body-md text-center mt-4">
+    <a href="signup.html" class="text-outline-variant hover:text-on-surface transition-colors flex items-center justify-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span> Back to sign up</a>
+</p>
+</div>
+<!-- Decorative Light Leak -->
+<div class="absolute bottom-0 right-0 w-96 h-96 bg-primary-container rounded-full filter blur-[120px] opacity-10 pointer-events-none hidden sm:block"></div>
+</section>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const otpInputs = document.querySelectorAll('.otp-input');
+        const form = document.getElementById('otp-form');
+        const resendBtn = document.getElementById('resend-btn');
+        const timerSpan = document.getElementById('timer');
+        
+        // Auto-focus and backspace logic for OTP inputs
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                // Ensure only numbers are entered
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                
+                // Move to next input if current is filled
+                if (e.target.value !== '') {
+                    if (index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                // Move to previous input on Backspace if current is empty
+                if (e.key === 'Backspace' && e.target.value === '') {
+                    if (index > 0) {
+                        otpInputs[index - 1].focus();
+                    }
+                }
+            });
+            
+            // Allow pasting full 6 digit code
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const pastedData = e.clipboardData.getData('text').replace(/[^0-9]/g, '').slice(0, 6);
+                if (pastedData) {
+                    for (let i = 0; i < pastedData.length; i++) {
+                        if (otpInputs[i]) {
+                            otpInputs[i].value = pastedData[i];
+                            if (i < otpInputs.length - 1) {
+                                otpInputs[i+1].focus();
+                            } else {
+                                otpInputs[i].focus();
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Mock verification submit
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let otp = '';
+            otpInputs.forEach(input => otp += input.value);
+            
+            if (otp.length === 6) {
+                // Redirect to home page after successful OTP verification
+                window.location.href = 'index.html';
+            } else {
+                alert('Please enter a valid 6-digit OTP.');
+            }
+        });
+
+        // Simple timer logic for Resend button
+        let timeLeft = 30;
+        let timerId = setInterval(() => {
+            timeLeft--;
+            if (timeLeft <= 0) {
+                clearInterval(timerId);
+                resendBtn.disabled = false;
+                resendBtn.innerHTML = "Resend OTP";
+            } else {
+                timerSpan.textContent = timeLeft;
+            }
+        }, 1000);
+        
+        resendBtn.addEventListener('click', () => {
+            alert('A new OTP has been sent!');
+            // Reset timer
+            resendBtn.disabled = true;
+            timeLeft = 30;
+            resendBtn.innerHTML = 'Resend in <span id="timer">30</span>s';
+            timerId = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    resendBtn.disabled = false;
+                    resendBtn.innerHTML = "Resend OTP";
+                } else {
+                    document.getElementById('timer').textContent = timeLeft;
+                }
+            }, 1000);
+        });
+    });
+</script>
+</body></html>
